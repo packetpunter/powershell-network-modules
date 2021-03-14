@@ -14,7 +14,7 @@
             Position=1
         )]
         [ValidateNotNullOrEmpty()]
-        [String] $NumberOfTests,
+        [Int] $NumberOfTests,
 
         [Parameter(
             Mandatory=$False,
@@ -30,7 +30,7 @@
             Position=4
         )]
         [ValidateNotNullOrEmpty()]
-        [Int] $TimeBetweenRequests
+        [Float] $TimeBetweenRequests
     )
 
     Begin{
@@ -42,7 +42,7 @@
         }
 
         if (!$NumberOfTests){
-            $NumberOfTests = 10;
+            $NumberOfTests = 10; 
             Write-Verbose "Setting 10 as the number of tests.." 
         }
 
@@ -57,18 +57,24 @@
             $TimeBetweenRequests = .7
             Write-Verbose "Setting default time between requests to .7 seconds"
         }
+     
+        $t = 1;
+        $totalNumberTests = $NumberOfTests * ($ListOfURLs.Length);
         
     }
     
     Process{
-        for($i=0; $i -le $NumberOfTests; $i++){
-            Write-Progress -Id 0 -Activity "Running name resolution test against $Server" -Status "Procedures Running:"
-
+        
+        for($i=1; $i -ile $NumberOfTests; $i++){
+            $percent = [Float]$t/$totalNumberTests * 100;
+            Write-Progress -Id 0 -Activity "Running name resolution test against $Server" -Status "Procedures Running:" -PercentComplete $percent
             $ListOfURLs | ForEach-Object -Process {
-                Write-Progress -Id 1 -ParentId 0 -Activity "Resolving $_ with $TimeBetweenRequests sec spacing between requests"
+                $t++;
+                Write-Progress -Id 1 -ParentId 0 -Activity "Resolving $_ with $TimeBetweenRequests sec spacing between requests" 
                 $test = Measure-Command {Resolve-DnsName $_ -Server $Server -Type A}
                 $result = $test.TotalSeconds
                 $totalMeasurement += $result
+                
                 Start-Sleep -Seconds $TimeBetweenRequests
             }
 
@@ -78,7 +84,7 @@
     End{
         $average = $totalMeasurement / $NumberOfTests
         Write-Host "**********************************************************************************"
-        Write-Host "|  " " DNS Server:" $Server "Average Response Time(s):" $average "            |"
+        Write-Host "  " " DNS Server:" $Server "Average Response Time(s):" $average 
         Write-Host "**********************************************************************************"
 
     }
@@ -86,4 +92,3 @@
 }
 
 Export-ModuleMember Invoke-DNSTimeTest
-    
