@@ -1,4 +1,4 @@
-#Usage
+# Usage
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 Import-Module PATH_TO_PSM1
