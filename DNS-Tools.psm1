@@ -83,9 +83,9 @@
 
     End{
         $average = $totalMeasurement / $NumberOfTests
-        Write-Host "**********************************************************************************"
-        Write-Host "  " " DNS Server:" $Server "Average Response Time(s):" $average 
-        Write-Host "**********************************************************************************"
+        Write-Host "****************************************************************************************************"
+        Write-Host "  " " DNS Server:" $Server "Average Response Time(s):" $average for $totalNumberTests different queries
+        Write-Host "****************************************************************************************************"
 
     }
 
