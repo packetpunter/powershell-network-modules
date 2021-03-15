@@ -30,7 +30,14 @@
             Position=4
         )]
         [ValidateNotNullOrEmpty()]
-        [Float] $TimeBetweenRequests
+        [Float] $TimeBetweenRequests,
+
+        [Parameter(
+            Mandatory=$False,
+            HelpMessage="Return JSON instead of Print",
+            Position=4
+        )]
+        [Switch] $ReturnJSON
     )
 
     Begin{
@@ -83,9 +90,14 @@
 
     End{
         $average = $totalMeasurement / $NumberOfTests
-        Write-Host "****************************************************************************************************"
-        Write-Host "  " " DNS Server:" $Server "Average Response Time(s):" $average for $totalNumberTests different queries
-        Write-Host "****************************************************************************************************"
+        if(!$ReturnJSON){
+            Write-Host "****************************************************************************************************"
+            Write-Host "  " " DNS Server:" $Server "Average Response Time(s):" $average "for $totalNumberTests different queries"
+            Write-Host "****************************************************************************************************"
+        }else{
+            $result = @{Server=$Server;AverageResponse=$average;URLList=$ListOfURLs;NumQueries=$NumberOfTests;TimeBetweenQueries=$TimeBetweenRequests;NumTests=$totalNumberTests} | ConvertTo-Json
+            return $result
+        }
 
     }
 
