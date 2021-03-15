@@ -64,7 +64,7 @@
             $TimeBetweenRequests = .7
             Write-Verbose "Setting default time between requests to .7 seconds"
         }
-     
+        
         $t = 1;
         $totalNumberTests = $NumberOfTests * ($ListOfURLs.Length);
         
@@ -91,11 +91,20 @@
     End{
         $average = $totalMeasurement / $NumberOfTests
         if(!$ReturnJSON){
-            Write-Host "****************************************************************************************************"
-            Write-Host "  " " DNS Server:" $Server "Average Response Time(s):" $average "for $totalNumberTests different queries"
-            Write-Host "****************************************************************************************************"
+            Write-Host "*******************************************************************"
+            Write-Host "    DNS Server:                   " $Server 
+            Write-Host "    Average Response Time (sec):  " $average 
+            Write-Host "    Number of Queries:            " $totalNumberTests
+            Write-Host "*******************************************************************"
         }else{
-            $result = @{Server=$Server;AverageResponse=$average;URLList=$ListOfURLs;NumQueries=$NumberOfTests;TimeBetweenQueries=$TimeBetweenRequests;NumTests=$totalNumberTests} | ConvertTo-Json
+            $result = @{
+                Server=$Server;
+                AverageResponse=$average;
+                URLList=$ListOfURLs;
+                NumQueries=$NumberOfTests;
+                TimeBetweenQueries=$TimeBetweenRequests;
+                NumTests=$totalNumberTests
+            } | ConvertTo-Json
             return $result
         }
 
