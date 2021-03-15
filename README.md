@@ -93,3 +93,21 @@ VERBOSE: nmsu.edu
     DNS Server: 8.8.8.8 Average Response Time(s): 0.06273592
 **********************************************************************************
 ```
+### Compounded Requests
+```powershell
+Invoke-DNSTimeTest -Server 10.2.0.4 -TimeBetweenRequests .3 -NumberOfTests 20; Invoke-DNSTimeTest -Server 10.2.0.177 -TimeBetweenRequests .3 -NumberOfTests 20; Invoke-DNSTimeTest -Server 10.2.0.1 -TimeBetweenRequests .3 -NumberOfTests 20 -ListOfURLs ("www.google.com","www.unm.edu","console.aws.amazon.com","nmt.edu","phs.org")
+```
+```
+WARNING: DNS Packets this fast may be blocked by next-generation firewalls
+****************************************************************************************************
+    DNS Server: 10.2.0.4 Average Response Time(s): 0.01356106 for 80 different queries
+****************************************************************************************************
+WARNING: DNS Packets this fast may be blocked by next-generation firewalls
+****************************************************************************************************
+    DNS Server: 10.2.0.177 Average Response Time(s): 0.009862355 for 80 different queries
+****************************************************************************************************
+WARNING: DNS Packets this fast may be blocked by next-generation firewalls
+****************************************************************************************************
+    DNS Server: 10.2.0.1 Average Response Time(s): 0.020605915 for 100 different queries
+****************************************************************************************************
+```
