@@ -111,7 +111,7 @@ WARNING: DNS Packets this fast may be blocked by next-generation firewalls
     DNS Server: 10.2.0.1 Average Response Time(s): 0.020605915 for 100 different queries
 ****************************************************************************************************
 ```
-#Notes
+# Notes
 This tool makes a lot of assumptions. It assumes the specified DNS server is valid, so this cannot be used to test whether or not a thing IS a dns server. It also assumes a certain set of queries are standard. 
 As a user can specify the list of Domains to query, it ought to be mentioned that this tool does not check for valid record type responses (e.g. it won't check if the response is NXDOMAIN vs the A record).
 
