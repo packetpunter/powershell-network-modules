@@ -67,6 +67,8 @@
         
         $t = 1;
         $totalNumberTests = $NumberOfTests * ($ListOfURLs.Length);
+
+        if ($env:TERM) { $Linux = $True }
         
     }
     
@@ -78,7 +80,11 @@
             $ListOfURLs | ForEach-Object -Process {
                 $t++;
                 Write-Progress -Id 1 -ParentId 0 -Activity "Resolving $_ with $TimeBetweenRequests sec spacing between requests" 
-                $test = Measure-Command {Resolve-DnsName $_ -Server $Server -Type A}
+                if ($Linux) { 
+                    $test = Measure-Command {dig -t A $_ @$Server}
+                }else{
+                    $test = Measure-Command {Resolve-DnsName $_ -Server $Server -Type A}
+                }
                 $result = $test.TotalSeconds
                 $totalMeasurement += $result
                 
