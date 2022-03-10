@@ -73,7 +73,7 @@
     }
     
     Process{
-        
+        $now = get-date -DisplayHint DateTime
         for($i=1; $i -ile $NumberOfTests; $i++){
             $percent = [Float]$t/$totalNumberTests * 100;
             Write-Progress -Id 0 -Activity "Running name resolution test against $Server" -Status "Procedures Running:" -PercentComplete $percent
@@ -98,6 +98,7 @@
         $average = $totalMeasurement / $NumberOfTests
         if(!$ReturnJSON){
             Write-Host "*******************************************************************"
+            Write-Host "    Test Start Time:              " $now
             Write-Host "    DNS Server:                   " $Server 
             Write-Host "    Average Response Time (sec):  " $average 
             Write-Host "    Number of Queries:            " $totalNumberTests
