@@ -110,7 +110,8 @@
                 URLList=$ListOfURLs;
                 NumQueries=$NumberOfTests;
                 TimeBetweenQueries=$TimeBetweenRequests;
-                NumTests=$totalNumberTests
+                NumTests=$totalNumberTests;
+                TimeStamp=$now
             } | ConvertTo-Json
             return $result
         }
