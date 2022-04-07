@@ -65,7 +65,21 @@ function Get-SplunkASNPrefixSearch() {
 
         $FinalFull = $SPL_FULL -replace "xXx",$Tups
         Write-Host `n`n$FinalFull`n`n
-
+        
+        if ($CSVToFile) {
+            $OutputData = @()
+            $date = Get-Date -Format "MM-dd-yyyyTHH:mm:ss"
+            Write-Verbose "CIDR`tASN`tTimeStamp:"
+            foreach($cidr in $Prefixes){
+                Write-Verbose "x`ty`tz".replace("x",$cidr).replace("y",$ASN).replace("z", $date)
+                $Entry = New-Object psobject
+                $Entry | Add-Member -MemberType NoteProperty -Name "CIDR" -Value $cidr
+                $Entry | Add-Member -MemberType NoteProperty -Name "ASN" -Value $ASN
+                $Entry | Add-Member -MemberType NoteProperty -Name "Timestamp" -Value $date
+                $OutputData += $Entry
+            }
+            $OutputData | Export-CSV -Path $CSVToFile
+        }
     }
 }
 
