@@ -119,7 +119,7 @@ WARNING: DNS Packets this fast may be blocked by next-generation firewalls
 ```
 Or this module is broken into two separate cmdlets if you're into that sort of thing
 ```powershell
-$fb_prefixes = Get-SplunkASNPrefixSearch -ASN 32934 -CSVToFile ./as32934.csv
+$fb_prefixes = Invoke-BGPViewASNQuery -ASN 32934 -CSVToFile ./as32934.csv
 Get-SPLForSubnets -PrefixList $fb_prefixes
 ```
 
