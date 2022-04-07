@@ -119,8 +119,15 @@ WARNING: DNS Packets this fast may be blocked by next-generation firewalls
 ```
 Or this module is broken into two separate cmdlets if you're into that sort of thing
 ```powershell
-$fb_prefixes = Invoke-BGPViewASNQuery -ASN 32934 -CSVToFile ./as32934.csv
+$fb_prefixes = Invoke-BGPViewASNQuery -ASN 32934
 Get-SPLForSubnets -PrefixList $fb_prefixes
+```
+Alternatively, you can save the query results and use them later to re-generate the SPL search string
+```powershell
+Invoke-BGPViewASNQuery -ASN 32934 -CSVToFile ./as32934.csv
+[...]
+$prefixes = Import-CSV ./as32934.csv
+Get-SPLForSubnets -PrefixList $prefixes.CIDR
 ```
 
 This module is just for people that use Splunk and need to look up traffic for a certain ASN in splunk, it assumes the traffic logs exist in splunk with 'src_ip' and 'dest_ip' transformations applied and stored in the networking index.
