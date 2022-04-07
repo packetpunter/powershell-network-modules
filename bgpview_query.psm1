@@ -103,14 +103,7 @@ function Get-SplunkASNPrefixSearch() {
             Position=0
         )]
         [ValidateASN()]
-        [String] $ASN,
-
-        [Parameter(
-            Mandatory=$False,
-            HelpMessage="Outfile path for query results in CSV"
-        )]
-        [ValidateNotNullOrEmpty()]
-        [String] $CSVToFile
+        [String] $ASN
     )
     Process{
         $subnets = Invoke-BGPViewASNQuery -ASN $ASN
