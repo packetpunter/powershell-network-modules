@@ -111,8 +111,14 @@ WARNING: DNS Packets this fast may be blocked by next-generation firewalls
     DNS Server: 10.2.0.1 Average Response Time(s): 0.020605915 for 100 different queries
 ****************************************************************************************************
 ```
-# Notes
-This tool makes a lot of assumptions. It assumes the specified DNS server is valid, so this cannot be used to test whether or not a thing IS a dns server. It also assumes a certain set of queries are standard. 
-As a user can specify the list of Domains to query, it ought to be mentioned that this tool does not check for valid record type responses (e.g. it won't check if the response is NXDOMAIN vs the A record).
 
-As a side note, what this is really doing is wrapping a timer around Resolve-DnsName or dig (depending on the OS).
+
+## Using bgpview_query.ps1
+```powershell
+ Get-SplunkASNPrefixSearch -ASN 32934
+```
+This module is just for people that use Splunk and need to look up traffic for a certain ASN in splunk, it assumes the traffic logs exist in splunk with 'src_ip' and 'dest_ip' transformations applied and stored in the networking index.
+Adding ```-Verbose``` gives more data about CIDRs found for the ASN in a readable format
+
+# Notes
+Use these at your own risk, don't be a dick either.
