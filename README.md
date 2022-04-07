@@ -117,6 +117,12 @@ WARNING: DNS Packets this fast may be blocked by next-generation firewalls
 ```powershell
  Get-SplunkASNPrefixSearch -ASN 32934
 ```
+Or this module is broken into two separate cmdlets if you're into that sort of thing
+```powershell
+$fb_prefixes = Get-SplunkASNPrefixSearch -ASN 32934 -CSVToFile ./as32934.csv
+Get-SPLForSubnets -PrefixList $fb_prefixes
+```
+
 This module is just for people that use Splunk and need to look up traffic for a certain ASN in splunk, it assumes the traffic logs exist in splunk with 'src_ip' and 'dest_ip' transformations applied and stored in the networking index.
 Adding ```-Verbose``` gives more data about CIDRs found for the ASN in a readable format
 
