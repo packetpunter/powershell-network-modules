@@ -78,7 +78,7 @@ function Get-SplunkASNPrefixSearch() {
                 $Entry | Add-Member -MemberType NoteProperty -Name "Timestamp" -Value $date
                 $OutputData += $Entry
             }
-            $OutputData | Export-CSV -Path $CSVToFile
+            $OutputData | Export-CSV -Path $CSVToFile -Append
         }
     }
 }
